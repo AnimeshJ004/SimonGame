@@ -49,6 +49,17 @@ document.addEventListener("keypress",function(){
 
 });
 
+document.addEventListener("touchstart",function(event){
+    if(started == false){
+        console.log("Game started via touch")
+        started = true;
+        backgroundMusic.play();
+        levelup();
+        event.preventDefault(); // Prevent default touch behavior like scrolling
+    }
+
+}, { passive: false });
+
 function levelup(){
     userseq=[];
     level++;

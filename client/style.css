@@ -112,6 +112,20 @@ audio:hover {
 }
 
 /* Responsive design */
+@media (max-width: 768px) {
+   h1 {
+       font-size: 2.5rem;
+   }
+   .box {
+       height: 120px;
+       width: 120px;
+       margin: 12px;
+   }
+   .mainbox {
+       max-width: 320px;
+   }
+}
+
 @media (max-width: 600px) {
    h1 {
        font-size: 2rem;
@@ -123,6 +137,32 @@ audio:hover {
    }
    .mainbox {
        max-width: 280px;
+   }
+   h3, h4 {
+       font-size: 1rem;
+   }
+   body {
+       padding: 10px;
+   }
+}
+
+@media (max-width: 480px) {
+   h1 {
+       font-size: 1.8rem;
+   }
+   .box {
+       height: 80px;
+       width: 80px;
+       margin: 8px;
+   }
+   .mainbox {
+       max-width: 240px;
+   }
+   h3, h4 {
+       font-size: 0.9rem;
+   }
+   body {
+       padding: 5px;
    }
 }
 
