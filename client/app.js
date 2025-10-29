@@ -1,33 +1,61 @@
 let gameseq=[];
 let userseq=[];
 let colors=["color1","color2","color3","color4"];
-
 let started = false;
 let level=0;
 let score=0;
 let highscore=0;
 let h4 = document.querySelector("h4");
+let h3 = document.querySelector("h3");
 const backgroundMusic = document.querySelector("#background-music");
 const errorSound = document.querySelector("#error-sound");
-document.addEventListener("keypress",function(){ 
+
+// Fetch initial high score from backend
+async function fetchHighScore() {
+    try {
+        const response = await fetch('/highscore');
+        const data = await response.json();
+        highscore = data.highScore;
+        h3.innerText = `High Score: ${highscore}`;
+    } catch (error) {
+        console.error('Failed to fetch high score:', error);
+        h3.innerText = `High Score: ${highscore}`;
+    }
+}
+
+// Save high score to backend
+async function saveHighScore(score) {
+    try {
+        await fetch('/highscore', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ score })
+        });
+    } catch (error) {
+        console.error('Failed to save high score:', error);
+    }
+}
+
+document.addEventListener("keypress",function(){
     if(started == false){
         console.log("Game started")
         started = true;
         backgroundMusic.play();
         levelup();
 
-    } 
-    
+    }
+
 });
 
 function levelup(){
     userseq=[];
     level++;
-    highscore++;
-    
+
     h4.innerText = `Level ${level}`;
 
-    let random = Math.floor(Math.random()*3);
+    let random = Math.floor(Math.random()*4);
     let rancolor= colors[random];
     let randomcolor = document.querySelector(`.${rancolor}`);
 
@@ -56,18 +84,18 @@ function checkAns(idx){
         }else{
             backgroundMusic.pause();
             errorSound.play();
-            if(highscore > level){
-                highscore=level;
+            if(level > highscore){
+                highscore = level;
+                saveHighScore(highscore);
             }
-            let h3 = document.querySelector("h3");
-            h3.innerText=`Your highscore is: ${highscore}`;
-            h4.innerText = `Game Over Press any key to restart and your score is ${level}`;
-            // document.querySelector("body").style.backgroundColor="red";
+            h3.innerText=`High Score: ${highscore}`;
+            h4.innerText = `Game Over! Press any key to restart. Your score: ${level}`;
+            document.querySelector("body").style.backgroundColor="red";
             setTimeout(function(){
-                document.querySelector("body").style.backgroundColor="white"; 
+                document.querySelector("body").style.backgroundColor="white";
             },150)
             reset();
-        }    
+        }
 }
 function btnpress(){ 
    let btn = this;
@@ -86,7 +114,10 @@ function reset(){
     userseq=[];
     level=0;
     score=0;
-    highscore = level;
     started = false;
     backgroundMusic.currentTime=0;
+    h4.innerText = "Press Any key to start";
 }
+
+// Initialize high score on page load
+fetchHighScore();
