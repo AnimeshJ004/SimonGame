@@ -1,10 +1,16 @@
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Visit-00C7B7?style=for-the-badge&logo=vercel)](https://simon-game-delta-weld.vercel.app/)
+
 # Simon Game
 
 A web-based implementation of the classic electronic memory game, Simon. This project challenges players to remember and repeat an ever-growing sequence of colors and sounds.
 
 
-Link-:**[https://simongame-9c38.onrender.com]**
+Link-:**[https://simon-game-delta-weld.vercel.app/]**
 ---
+
+## 📸 Screenshots
+<img width="1364" height="591" alt="Screenshot 2026-05-23 201118" src="https://github.com/user-attachments/assets/e7dc16ae-b275-4002-8895-b7875992bc62" />
+
 
 ## 🚀 Features
 
