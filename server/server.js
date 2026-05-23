@@ -2,9 +2,10 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 const MONGODB_URI = process.env.MONGODB_URI;
 
 // Middleware
@@ -47,8 +48,13 @@ app.post('/highscore', async (req, res) => {
   }
 });
 
-// Serve static files (HTML, CSS, JS)
-app.use(express.static('client'));
+// Serve static files (HTML, CSS, JS) using absolute path
+app.use(express.static(path.join(__dirname, '..', 'client')));
+
+// Catch-all: serve index.html for any unmatched route
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'index.html'));
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
